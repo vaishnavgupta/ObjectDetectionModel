@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Object Detection App - Vaishnav Gupta</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+        }
+
+        input[type="file"] {
+            margin: 15px 0;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        img {
+            margin-top: 10px;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #333;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        footer {
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+    </style>
+
+    <script>
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+
+<header>
+    <h1>Object Detection Model</h1>
+</header>
+
+<div class="container">
+    <div class="card">
+        <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+            <input type="file" name="file" required>
+            <br>
+            <button type="submit">Predict</button>
+        </form>
+
+        <!-- Loader -->
+        <div class="loader" id="loader">
+            <p>Predicting...</p>
+            <div class="spinner"></div>
+        </div>
+
+        {% if prediction %}
+        <div class="result">
+            <h2>Prediction: {{ prediction }}</h2>
+            <img src="{{ img_path }}" alt="Uploaded Image">
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<footer>
+    <p>
+        Developed by <b>Vaishnav Gupta</b> |
+        <a href="https://github.com/vaishnavgupta" target="_blank">
+            GitHub
+        </a>
+    </p>
+</footer>
+
+</body>
+</html>
